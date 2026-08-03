@@ -1,0 +1,226 @@
+:root {
+  --ink: #1a1a1a;
+  --paper: #f6f1eb;
+  --menu-paper: #f8f6f1;
+  --menu-ink: rgba(20, 18, 18, 0.94);
+  --menu-muted: rgba(20, 18, 18, 0.4);
+  --menu-line: rgba(20, 18, 18, 0.42);
+  --menu-shadow: rgba(23, 21, 18, 0.08);
+  --overlay-dark: rgba(10, 10, 10, 0.78);
+  --header-text: rgba(255, 255, 255, 0.92);
+  --header-line: rgba(255, 255, 255, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  color: var(--header-text);
+}
+
+.site-header__logo {
+  color: var(--header-text);
+  text-decoration: none;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.site-header__toggle {
+  background: none;
+  border: 1px solid var(--header-line);
+  color: var(--header-text);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.site-header__social {
+  display: none;
+  gap: 1.25rem;
+}
+
+.site-header__social a {
+  color: var(--menu-ink);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-header__back {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--menu-ink);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+body.menu-open .site-header__logo,
+body.menu-open .site-header__back {
+  color: var(--menu-ink);
+}
+
+body.menu-open .site-header__toggle {
+  display: none;
+}
+
+body.menu-open .site-header__social {
+  display: flex;
+}
+
+body.menu-open .site-header__back {
+  display: inline-block;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  background-image: url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay-dark);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 2rem;
+  color: var(--header-text);
+  max-width: 640px;
+}
+
+.hero__title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hero__tagline {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--menu-paper);
+  color: var(--menu-ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 2rem 2rem;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease;
+  box-shadow: 0 12px 30px var(--menu-shadow);
+}
+
+body.menu-open .site-menu {
+  transform: translateY(0);
+}
+
+.site-menu__title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--menu-muted);
+  margin: 0 0 1.5rem;
+}
+
+.site-menu__links {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  border-top: 1px solid var(--menu-line);
+}
+
+.site-menu__links li {
+  border-bottom: 1px solid var(--menu-line);
+}
+
+.site-menu__links a {
+  display: block;
+  padding: 0.9rem 0;
+  color: var(--menu-ink);
+  text-decoration: none;
+  font-size: 1.75rem;
+  letter-spacing: 0.01em;
+}
+
+.site-menu__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.site-menu__tag {
+  background: none;
+  border: 1px solid var(--menu-line);
+  color: var(--menu-muted);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: default;
+}
+
+.site-menu__copyright {
+  font-size: 0.75rem;
+  color: var(--menu-muted);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    padding: 1.25rem;
+  }
+
+  .site-header__social {
+    gap: 0.85rem;
+  }
+
+  .site-menu__links a {
+    font-size: 1.4rem;
+  }
+}

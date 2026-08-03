@@ -1,0 +1,17 @@
+<header class="site-header">
+  <a class="site-header__logo" href="/">Northwind</a>
+
+  <button type="button" class="site-header__toggle" id="menuToggle" aria-controls="siteMenu" aria-expanded="false">
+    Menu
+  </button>
+
+  <div class="site-header__social">
+    <% social.forEach(function(item) { %>
+      <a href="<%= item.href %>"><%= item.label %></a>
+    <% }); %>
+  </div>
+
+  <button type="button" class="site-header__back" id="menuBack" aria-label="Close menu">
+    Back
+  </button>
+</header>

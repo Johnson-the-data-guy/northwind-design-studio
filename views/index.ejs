@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Northwind Design Studio</title>
+  <meta name="description" content="Northwind Design Studio is a creative studio delivering fashion and beauty photography with an editorial eye.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/header', { social: social }) %>
+
+  <main class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">Northwind Design Studio</h1>
+      <p class="hero__tagline">Creative direction, photography &amp; brand storytelling for fashion and beauty.</p>
+    </div>
+  </main>
+
+  <%- include('partials/menu', { navLinks: navLinks, categoryTags: categoryTags, year: year }) %>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
