@@ -3,167 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Northwind — Design feedback, without the chaos</title>
-  <meta name="description" content="Northwind is a design collaboration platform where clients review work, leave feedback in context, and approve deliverables in one calm place.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Northwind Design Studio</title>
+  <meta name="description" content="Northwind Design Studio is a creative studio delivering fashion and beauty photography with an editorial eye.">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header class="nav" id="siteNav">
-    <div class="nav__inner">
-      <a href="#top" class="nav__logo">Northwind</a>
-      <nav class="nav__links" aria-label="Primary">
-        <% navLinks.forEach(function(link) { %>
-          <a href="<%= link.href %>"><%= link.text %></a>
-        <% }); %>
-      </nav>
-      <a href="#pricing" class="btn btn--primary btn--sm nav__cta">Start free trial</a>
+  <%- include('partials/header', { social: social }) %>
+
+  <main class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">Northwind Design Studio</h1>
+      <p class="hero__tagline">Creative direction, photography &amp; brand storytelling for fashion and beauty.</p>
     </div>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="hero__text">
-        <p class="eyebrow" data-reveal>Design collaboration, simplified</p>
-        <h1 class="hero__title" data-reveal>Client feedback,<br>without the chaos.</h1>
-        <p class="hero__lede" data-reveal>Northwind brings every comment, revision, and approval into one calm, shared space — so clients say yes faster, and you stop digging through email threads.</p>
-        <div class="hero__actions" data-reveal>
-          <a href="#pricing" class="btn btn--primary">Start free trial</a>
-          <a href="#how-it-works" class="btn btn--ghost">See how it works</a>
-        </div>
-      </div>
-
-      <div class="hero__mock" data-reveal>
-        <div class="app-window">
-          <div class="app-window__bar">
-            <span class="dot dot--red"></span>
-            <span class="dot dot--amber"></span>
-            <span class="dot dot--green"></span>
-            <span class="app-window__url">northwind.app/atlas-rebrand</span>
-          </div>
-          <div class="app-window__body">
-            <aside class="app-window__sidebar">
-              <div class="sidebar__item sidebar__item--active">Atlas Rebrand</div>
-              <div class="sidebar__item">Summer Campaign</div>
-              <div class="sidebar__item">Packaging V2</div>
-              <div class="sidebar__item">Landing Page</div>
-            </aside>
-            <div class="app-window__canvas">
-              <img class="app-window__artboard" src="https://picsum.photos/seed/northwind-atlas/900/600" alt="" loading="lazy">
-              <span class="pin pin--1">1</span>
-              <span class="pin pin--2">2</span>
-              <div class="comment-card">
-                <p>&ldquo;Love the direction — can we warm up the background 10%?&rdquo;</p>
-                <span>Dana · Client</span>
-              </div>
-              <div class="approve-badge">✓ Approved</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="logos" aria-label="Trusted by">
-      <p class="logos__label">Trusted by teams at</p>
-      <div class="logos__grid">
-        <% clients.forEach(function(client) { %>
-          <div class="logo-mark">
-            <%- client.icon %>
-            <span><%= client.name %></span>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-
-    <section id="features" class="features">
-      <p class="eyebrow eyebrow--center" data-reveal>Why teams switch</p>
-      <h2 class="section-title" data-reveal>Everything approval needs, nothing it doesn&rsquo;t.</h2>
-      <div class="features__grid">
-        <% features.forEach(function(feature) { %>
-          <div class="feature-card" data-reveal>
-            <div class="feature-card__icon"><%- feature.icon %></div>
-            <h3><%= feature.title %></h3>
-            <p><%= feature.body %></p>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-
-    <section id="how-it-works" class="steps">
-      <p class="eyebrow eyebrow--center" data-reveal>How it works</p>
-      <h2 class="section-title" data-reveal>From draft to sign-off in three steps.</h2>
-      <div class="steps__grid">
-        <% steps.forEach(function(step, index) { %>
-          <div class="step-card" data-reveal>
-            <span class="step-card__number"><%= String(index + 1).padStart(2, '0') %></span>
-            <h3><%= step.title %></h3>
-            <p><%= step.body %></p>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-
-    <section id="pricing" class="pricing">
-      <p class="eyebrow eyebrow--center" data-reveal>Pricing</p>
-      <h2 class="section-title" data-reveal>Simple plans, no surprises.</h2>
-      <div class="pricing__grid">
-        <% pricing.forEach(function(tier) { %>
-          <div class="pricing-card<%= tier.highlighted ? ' pricing-card--highlight' : '' %>" data-reveal>
-            <% if (tier.highlighted) { %><span class="pricing-card__tag">Most popular</span><% } %>
-            <h3><%= tier.name %></h3>
-            <p class="pricing-card__price"><%= tier.price %><span><%= tier.period %></span></p>
-            <p class="pricing-card__desc"><%= tier.description %></p>
-            <ul class="pricing-card__list">
-              <% tier.features.forEach(function(item) { %>
-                <li><%= item %></li>
-              <% }); %>
-            </ul>
-            <a href="#top" class="btn <%= tier.highlighted ? 'btn--primary' : 'btn--outline' %>"><%= tier.cta %></a>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-
-    <section id="testimonials" class="testimonials">
-      <p class="eyebrow eyebrow--center" data-reveal>Customers</p>
-      <h2 class="section-title" data-reveal>Studios and teams who ship faster with Northwind.</h2>
-      <div class="testimonials__grid">
-        <% testimonials.forEach(function(item) { %>
-          <blockquote class="testimonial-card" data-reveal>
-            <p>&ldquo;<%= item.quote %>&rdquo;</p>
-            <footer><strong><%= item.name %></strong><span><%= item.title %></span></footer>
-          </blockquote>
-        <% }); %>
-      </div>
-    </section>
-
-    <section class="cta-banner" data-reveal>
-      <h2>Ready to make approvals painless?</h2>
-      <p>Bring your clients into one calm workspace — free for 14 days, no card required.</p>
-      <a href="#pricing" class="btn btn--primary btn--lg">Start free trial</a>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="site-footer__inner">
-      <div class="site-footer__brand">
-        <span class="nav__logo">Northwind</span>
-        <p>Design feedback and approvals, in one calm place.</p>
-      </div>
-      <nav class="site-footer__links" aria-label="Footer">
-        <% navLinks.forEach(function(link) { %>
-          <a href="<%= link.href %>"><%= link.text %></a>
-        <% }); %>
-      </nav>
-    </div>
-    <p class="site-footer__copyright">&copy; Northwind. All rights reserved. <%= year %>.</p>
-  </footer>
+  <%- include('partials/menu', { navLinks: navLinks, categoryTags: categoryTags, year: year }) %>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
   <script src="/js/main.js"></script>
 </body>
 </html>
