@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <meta name="stripe-publishable-key" content="<%= stripePublishableKey %>">
 </head>
 <body>
   <header class="nav" id="siteNav">
@@ -120,7 +121,9 @@
                 <li><%= item %></li>
               <% }); %>
             </ul>
-            <a href="#top" class="btn <%= tier.highlighted ? 'btn--primary' : 'btn--outline' %>"><%= tier.cta %></a>
+            <form method="POST" action="/checkout/subscribe/<%= tier.slug %>">
+              <button type="submit" class="btn <%= tier.highlighted ? 'btn--primary' : 'btn--outline' %>"><%= tier.cta %></button>
+            </form>
           </div>
         <% }); %>
       </div>

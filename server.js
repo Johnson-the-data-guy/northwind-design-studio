@@ -1,5 +1,15 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ quiet: true });
+}
+
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
+const { passport } = require('./config/passport');
+const ensureAuthenticated = require('./middleware/ensureAuthenticated');
+const authRoutes = require('./routes/auth');
+const checkoutRoutes = require('./routes/checkout');
+const PRICING = require('./config/pricing');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -7,6 +17,22 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
+
+if (!process.env.SESSION_SECRET) {
+  console.warn('SESSION_SECRET is not set — using an insecure development-only fallback. Set it in .env before deploying.');
+}
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'dev-only-insecure-secret',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoutes);
+app.use('/checkout', checkoutRoutes);
 
 const NAV_LINKS = [
   { text: 'Features', href: '#features' },
@@ -75,36 +101,6 @@ const STEPS = [
   }
 ];
 
-const PRICING = [
-  {
-    name: 'Starter',
-    price: '$19',
-    period: '/mo',
-    description: 'For freelancers and solo designers.',
-    features: ['3 active projects', 'Unlimited client reviewers', '30-day version history', 'Email support'],
-    highlighted: false,
-    cta: 'Start free trial'
-  },
-  {
-    name: 'Studio',
-    price: '$49',
-    period: '/mo',
-    description: 'For growing design teams.',
-    features: ['Unlimited projects', 'Custom-branded client portal', 'Full version history', 'One-click approvals', 'Priority support'],
-    highlighted: true,
-    cta: 'Start free trial'
-  },
-  {
-    name: 'Agency',
-    price: '$129',
-    period: '/mo',
-    description: 'For multi-team agencies.',
-    features: ['Everything in Studio', 'Multiple workspaces', 'Single sign-on (SSO)', 'Dedicated success manager'],
-    highlighted: false,
-    cta: 'Talk to sales'
-  }
-];
-
 const TESTIMONIALS = [
   {
     quote: 'Northwind cut our revision cycles in half. Clients actually enjoy leaving feedback now.',
@@ -131,7 +127,8 @@ app.get('/', (req, res) => {
     steps: STEPS,
     pricing: PRICING,
     testimonials: TESTIMONIALS,
-    year: new Date().getFullYear()
+    year: new Date().getFullYear(),
+    stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY || ''
   });
 });
 
@@ -151,6 +148,10 @@ app.get('/contact', (req, res) => {
     phone: '+1-555-0142',
     address: '12 Harbor Street, Northwind City'
   });
+});
+
+app.get('/dashboard', ensureAuthenticated, (req, res) => {
+  res.render('dashboard', { user: req.user });
 });
 
 if (require.main === module) {
