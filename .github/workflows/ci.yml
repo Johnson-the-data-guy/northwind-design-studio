@@ -10,10 +10,28 @@ jobs:
           node-version: '22'
       - run: npm install
       - run: npm test
-  deploy:
+  deploy-staging:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to Staging
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_EC2_HOST}}
+          username: ${{ secrets.STAGING_EC2_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd ~/northwind-design-studio-staging
+            git pull origin main
+            npm install
+            pm2 restart northwind-staging
+  deploy:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
     steps:
       - name: Deploy to Production
         uses: appleboy/ssh-action@v1
