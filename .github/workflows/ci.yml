@@ -25,7 +25,7 @@ jobs:
             cd ~/northwind-design-studio-staging
             git pull origin main
             npm install
-            pm2 restart northwind-staging
+            pm2 restart northwind
   deploy:
     needs: deploy-staging
     runs-on: ubuntu-latest
