@@ -13,7 +13,7 @@ jobs:
   deploy-staging:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/')
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to Staging
         uses: appleboy/ssh-action@v1
@@ -23,7 +23,9 @@ jobs:
           key: ${{ secrets.STAGING_SSH_KEY }}
           script: |
             cd ~/northwind-design-studio-staging
-            git pull origin main
+            git fetch origin
+            git checkout ${{ github.ref_name}}
+            git pull origin ${{ github.ref_name}}
             npm install
             pm2 restart northwind-staging
   deploy:
