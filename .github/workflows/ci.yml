@@ -13,7 +13,7 @@ jobs:
   deploy-staging:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/hotfix/')
     steps:
       - name: Deploy to Staging
         uses: appleboy/ssh-action@v1
