@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function () {
+      if (sessionStorage.getItem('theme') === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Northwind — Design feedback, without the chaos</title>
   <meta name="description" content="Northwind is a design collaboration platform where clients review work, leave feedback in context, and approve deliverables in one calm place.">
@@ -21,6 +28,7 @@
         <% }); %>
       </nav>
       <a href="/auth/google" class="nav__login">Login with Google</a>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
       <a href="#pricing" class="btn btn--primary btn--sm nav__cta">Start free trial</a>
     </div>
   </header>
@@ -168,6 +176,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="/js/theme.js"></script>
   <script src="/js/main.js"></script>
 </body>
 </html>
